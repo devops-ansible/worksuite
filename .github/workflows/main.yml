@@ -1,10 +1,9 @@
 name: Build this Docker image
 on:
   workflow_dispatch:
+  repository_dispatch:
   push:
     branches: master
-  schedule:
-    - cron: '11 23 * * 0'
 
 jobs:
   main:
@@ -29,3 +28,7 @@ jobs:
         with:
           push: true
           tags: devopsansiblede/worksuite:latest
+
+        
+      - name: Trigger Build Ubuntu Worksuite
+        run: curl --request POST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" https://api.github.com/repos/devops-ansible/worksuite/dispatches --data '{"event_type":"build_application"}'
