@@ -31,4 +31,4 @@ jobs:
 
         
       - name: Trigger Build Ubuntu Worksuite
-        run: curl --request POST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" https://api.github.com/repos/devops-ansible/worksuite/dispatches --data '{"event_type":"build_application"}'
+        run: curl --request POST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" https://api.github.com/repos/devops-ansible/gui-worksuite/dispatches --data '{"event_type":"build_application"}'
