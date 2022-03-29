@@ -33,6 +33,13 @@ RUN sed -i 's/PermitRootLogin PermitRootLogin prohibit-password/PermitRootLogin 
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN chsh -s $(which zsh); sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; exit 0;
 
+# Ansible
+RUN pip3 install --upgrade pip; \
+    pip install python3-keyczar ln -s /usr/bin/python3 /usr/bin/python; \
+    mkdir /etc/ansible/; \
+    echo '[local]\nlocalhost\n' > /etc/ansible/hosts; \
+    pip3 install ansible
+
 #Specific User stuff
 USER ubuntu
 WORKDIR /home/ubuntu
