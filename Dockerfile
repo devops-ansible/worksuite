@@ -1,6 +1,6 @@
 FROM       devopsansiblede/baseimage
 
-MAINTAINER Felix Kazyua
+MAINTAINER Felix Kazuya <me@felixkazuya.de>
 
 # Umgebungsvariablen
 ENV ROOT_PASSWORD ChangeMeByEnv
