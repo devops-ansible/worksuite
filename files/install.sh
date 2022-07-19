@@ -3,6 +3,22 @@
 # Date of Build
 echo "Built at" $(date) > /etc/built_at
 
+# modify regular entrypoint
+entryP="$( which entrypoint )"
+# first line of entrypoint
+entry1="$( head -n1 "${entryP}" )"
+# additional content
+entry2='
+
+cd /
+'
+# file contents except line 1
+entry3=$( tail -n +2 "${entryP}" )
+# write content to file
+echo "${entry1}${entry2}${entry3}" > "${entryP}"
+# ensure to change working dir back
+sed -i '/^\/boot.sh/a cd "${WD}"' "${entryP}"
+
 cd /install
 # File locations
 chmod a+x 01worksuite.boot.sh

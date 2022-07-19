@@ -3,14 +3,17 @@ FROM       devopsansiblede/baseimage
 MAINTAINER Felix Kazuya <me@felixkazuya.de>
 
 # Umgebungsvariablen
-ENV ROOT_PASSWORD   ChangeMeByEnv
-ENV UBUNTU_PASSWORD ChangeMeByEnv
-ENV CRON            false
+ENV ROOT_PASSWORD   "ChangeMeByEnv"
+ENV UBUNTU_PASSWORD "ChangeMeByEnv"
+ENV CRON            "false"
+ENV WD              "/home/ubuntu"
+# DO NOT CHANGE WORKINGDIR!
+ENV WORKINGDIR      "/workingdir"
 
 # Portfreigaben
 EXPOSE 22
-EXPOSE 80
-EXPOSE 443
+# EXPOSE 80
+# EXPOSE 443
 
 # Dateien reinkopieren
 COPY files/ /install/
@@ -20,8 +23,8 @@ RUN chmod a+x /install/install.sh && \
     /install/install.sh && \
     rm -rf /install
 
-USER root
-WORKDIR /home/ubuntu
+USER    "root"
+WORKDIR "${WORKINGDIR}"
 
 # Startbefehl
 # Combining ENTRYPOINT and CMD allows you to specify the default executable for your image while also providing default arguments to that executable which may be overridden by the user.
