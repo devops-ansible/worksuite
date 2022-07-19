@@ -3,17 +3,17 @@ FROM       devopsansiblede/baseimage
 MAINTAINER Felix Kazuya <me@felixkazuya.de>
 
 # Umgebungsvariablen
-ENV ROOT_PASSWORD   "ChangeMeByEnv"
-ENV UBUNTU_PASSWORD "ChangeMeByEnv"
+ENV USER_DEFINITION "{}"
 ENV CRON            "false"
 ENV WD              "/home/ubuntu"
 # DO NOT CHANGE WORKINGDIR!
 ENV WORKINGDIR      "/workingdir"
+# deprecated
+ENV ROOT_PASSWORD   "ChangeMeByEnv"
+ENV UBUNTU_PASSWORD "ChangeMeByEnv"
 
 # Portfreigaben
 EXPOSE 22
-# EXPOSE 80
-# EXPOSE 443
 
 # Dateien reinkopieren
 COPY files/ /install/
