@@ -3,13 +3,9 @@ FROM       devopsansiblede/baseimage
 MAINTAINER Felix Kazuya <me@felixkazuya.de>
 
 # Umgebungsvariablen
-ENV ROOT_PASSWORD ChangeMeByEnv
+ENV ROOT_PASSWORD   ChangeMeByEnv
 ENV UBUNTU_PASSWORD ChangeMeByEnv
-ENV CRON false
-
-
-#Date of Build
-RUN echo "Built at" $(date) > /etc/built_at
+ENV CRON            false
 
 # Portfreigaben
 EXPOSE 22
@@ -17,36 +13,15 @@ EXPOSE 80
 EXPOSE 443
 
 # Dateien reinkopieren
-ADD entrypoint /entrypoint
+COPY files/ /install/
 
-#Konfiguration
-RUN useradd -ms /bin/bash ubuntu
-RUN adduser ubuntu sudo
+# organise file permissions and run installer
+RUN chmod a+x /install/install.sh && \
+    /install/install.sh && \
+    rm -rf /install
 
-# Anwendungen
-RUN apt-get update
-RUN apt-get update && apt-get install -y openssh-server git git-crypt zsh tmux dialog apt-utils sudo cron traceroute iputils-ping dnsutils
-RUN mkdir /var/run/sshd
-RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/'  /etc/ssh/sshd_config
-RUN sed -i 's/PermitRootLogin PermitRootLogin prohibit-password/PermitRootLogin yes/'  /etc/ssh/sshd_config
-# SSH login fix. Otherwise user is kicked off after login
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN chsh -s $(which zsh); sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; exit 0;
-
-# Ansible
-RUN pip3 install --upgrade pip; \
-    pip install python3-keyczar ln -s /usr/bin/python3 /usr/bin/python; \
-    mkdir /etc/ansible/; \
-    echo '[local]\nlocalhost\n' > /etc/ansible/hosts; \
-    pip3 install ansible
-
-#Specific User stuff
-USER ubuntu
-WORKDIR /home/ubuntu
-RUN echo xfce4-session > /home/ubuntu/.xsession
-RUN chsh -s $(which zsh); sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; exit 0;
 USER root
-
+WORKDIR /home/ubuntu
 
 # Startbefehl
 # Combining ENTRYPOINT and CMD allows you to specify the default executable for your image while also providing default arguments to that executable which may be overridden by the user.
@@ -54,5 +29,6 @@ USER root
 # Entrypoint explizit override needed
 # Entrypoint needs new value for each argument ["/bin/ping","-c","4"]
 # CMD Overwrite by arguments after run (same as Entrypoint ["localhost"])
-RUN chmod +x /entrypoint
-ENTRYPOINT ["/entrypoint"]
+
+ENTRYPOINT [ "entrypoint" ]
+CMD [ "/usr/sbin/sshd", "-D" ]
