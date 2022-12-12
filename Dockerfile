@@ -1,16 +1,14 @@
-FROM       devopsansiblede/baseimage
+FROM devopsansiblede/baseimage
 
-MAINTAINER Felix Kazuya <me@felixkazuya.de>
+MAINTAINER macwinnie <dev@macwinnie.me>
 
 # Umgebungsvariablen
 ENV USER_DEFINITION "{}"
 ENV CRON            "false"
 ENV WD              "/home/ubuntu"
+
 # DO NOT CHANGE WORKINGDIR!
 ENV WORKINGDIR      "/workingdir"
-# deprecated
-ENV ROOT_PASSWORD   "ChangeMeByEnv"
-ENV UBUNTU_PASSWORD "ChangeMeByEnv"
 
 # Portfreigaben
 EXPOSE 22

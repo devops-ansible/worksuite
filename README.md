@@ -10,8 +10,6 @@ Worksuite image based on devopsansiblede/baseimage:latest. Supports data loading
 | `CRON`            | `false`         | no                 | Consider using variables from [Base image](https://g.dev-o.ps/docker-base), in this case `$START_CRON` |
 | `WD`              | `/home/ubuntu`  | yes                | Set to the directory, your container should find its home / working directory |
 | `WORKINGDIR`      | `/workingdir`   | no                 | *DON'T TOUCH* ... this path has to be equal with build environment of the image so the dynamic workdirectory `$WD` can operate as expected! |
-| `ROOT_PASSWORD`   | `ChangeMeByEnv` | yes                | *Deprecated*; password for root user |
-| `UBUNTU_PASSWORD` | `ChangeMeByEnv` | yes                | *Deprecated*; password for ubuntu user |
 
 ### The variable `USER_DEFINITION`
 
@@ -59,3 +57,7 @@ Start a new instance of this image:
 ```sh
 docker run -d -p 229:22 --name worksuite devopsansiblede/worksuite:latest
 ```
+
+## last built
+
+0000-00-00 00:00:00
