@@ -41,6 +41,7 @@ apt-get install -y \
 # Konfiguration
 useradd -ms /bin/bash ubuntu
 adduser ubuntu sudo
+deluser www-data
 
 # SSH Konfiguration
 mkdir /var/run/sshd
