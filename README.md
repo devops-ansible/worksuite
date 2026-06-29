@@ -60,4 +60,4 @@ docker run -d -p 229:22 --name worksuite devopsansiblede/worksuite:latest
 
 ## last built
 
-2026-06-22 00:37:26
+2026-06-29 00:35:00
